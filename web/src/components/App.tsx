@@ -13,6 +13,7 @@ import {
   Flex,
   FormControl,
   VStack,
+  Avatar,
 } from "@chakra-ui/react";
 
 import { io, Socket } from "socket.io-client";
@@ -67,9 +68,15 @@ export const App = () => {
   return (
     <ChakraProvider theme={theme}>
       <Center textAlign="center" fontSize="xl">
-        <ColorModeSwitcher justifySelf="flex-end" />
-        <Flex direction="column" height="100vh" width="lg" padding={10}>
-          <VStack flex={1} justifyContent="flex-end" paddingY={4} spacing={1}>
+        <Flex direction="column" height="100vh" width="lg" borderWidth={1}>
+          <HStack paddingX={4} paddingY={2} borderBottomWidth={1} spacing={3}>
+            <Avatar size="xs" />
+            <Text flex={1} textAlign="left" fontSize={18} fontWeight="bold">
+              someone
+            </Text>
+            <ColorModeSwitcher />
+          </HStack>
+          <VStack flex={1} justifyContent="flex-end" padding={2} spacing={2}>
             {messages.map(({ id, text, received }, idx) => (
               <Box
                 key={id}
@@ -82,15 +89,20 @@ export const App = () => {
                 borderTopRightRadius={21}
                 alignSelf={received ? "flex-start" : "flex-end"}
               >
-                <Text textColor={received ? "black" : "white"} fontSize="md">
+                <Text textColor={received ? "black" : "white"} fontSize="lg">
                   {text}
                 </Text>
               </Box>
             ))}
           </VStack>
           <FormControl as="form" onSubmit={onSubmit}>
-            <HStack spacing={2}>
-              <Input name="message" ref={register} />
+            <HStack spacing={2} padding={2}>
+              <Input
+                name="message"
+                ref={register}
+                placeholder="Type something..."
+                autoComplete="off"
+              />
               <Button type="submit">Send</Button>
             </HStack>
           </FormControl>
